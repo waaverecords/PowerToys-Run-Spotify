@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerToys-Run-Spotify", "PowerToys-Run-Spotify.csproj", "{C3A32FAB-C6E7-4F28-BFA2-B5273833EDFF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp1", "..\ConsoleApp1\ConsoleApp1.csproj", "{28630D8B-423A-47F4-B0E7-CACBD4881D15}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C3A32FAB-C6E7-4F28-BFA2-B5273833EDFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3A32FAB-C6E7-4F28-BFA2-B5273833EDFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3A32FAB-C6E7-4F28-BFA2-B5273833EDFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3A32FAB-C6E7-4F28-BFA2-B5273833EDFF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28630D8B-423A-47F4-B0E7-CACBD4881D15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28630D8B-423A-47F4-B0E7-CACBD4881D15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28630D8B-423A-47F4-B0E7-CACBD4881D15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28630D8B-423A-47F4-B0E7-CACBD4881D15}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,46 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0-windows</TargetFramework>
+        <RootNamespace>PowerToys_Run_Spotify</RootNamespace>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <OutputType>Library</OutputType>
+        <UseWpf>true</UseWpf>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Fody" Version="6.8.0" />
+        <PackageReference Include="Costura.Fody" Version="5.7.0" />
+        <PackageReference Include="SpotifyAPI.Web" Version="7.0.0" />
+        <PackageReference Include="SpotifyAPI.Web.Auth" Version="7.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Reference Include="PowerToys.Common.UI">
+            <HintPath>libs\PowerToys.Common.UI.dll</HintPath>
+        </Reference>
+        <Reference Include="PowerToys.ManagedCommon">
+            <HintPath>libs\PowerToys.ManagedCommon.dll</HintPath>
+        </Reference>
+        <Reference Include="PowerToys.Settings.UI.Lib">
+            <HintPath>libs\PowerToys.Settings.UI.Lib</HintPath>
+        </Reference>
+        <Reference Include="Wox.Plugin">
+            <HintPath>libs\Wox.Plugin.dll</HintPath>
+        </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Update="plugin.json">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="images\spotify.dark.png">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="images\spotify.light.png">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+    </ItemGroup>
+
+</Project>

@@ -1,0 +1,14 @@
+{
+    "ID": "BX1Z634F30489859A3671B4FQ7Y07193",
+    "Disabled": false,
+    "ActionKeyword": "sp",
+    "Name": "Spotify",
+    "Author": "waaverecords",
+    "Version": "1.0.0",
+    "Language": "csharp",
+    "Website": "https://github.com/waaverecords/PowerToys-Run-Spotify",
+    "ExecuteFileName": "PowerToys-Run-Spotify.dll",
+    "IsGlobal": false,
+    "IcoPathDark": "images\\spotify.dark.png",
+    "IcoPathLight": "images\\spotify.light.png"
+}
