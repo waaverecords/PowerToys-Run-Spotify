@@ -12,6 +12,7 @@
     <ItemGroup>
         <PackageReference Include="Fody" Version="6.8.0" />
         <PackageReference Include="Costura.Fody" Version="5.7.0" />
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
         <PackageReference Include="SpotifyAPI.Web" Version="7.0.0" />
         <PackageReference Include="SpotifyAPI.Web.Auth" Version="7.0.0" />
     </ItemGroup>
