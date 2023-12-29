@@ -10,5 +10,6 @@
     "ExecuteFileName": "PowerToys-Run-Spotify.dll",
     "IsGlobal": false,
     "IcoPathDark": "images\\spotify.dark.png",
-    "IcoPathLight": "images\\spotify.light.png"
+    "IcoPathLight": "images\\spotify.light.png",
+    "DynamicLoading": true
 }

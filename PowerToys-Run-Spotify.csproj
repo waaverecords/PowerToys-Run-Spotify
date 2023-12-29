@@ -1,18 +1,16 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net7.0-windows</TargetFramework>
+        <TargetFramework>net8.0-windows</TargetFramework>
         <RootNamespace>PowerToys_Run_Spotify</RootNamespace>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <OutputType>Library</OutputType>
         <UseWpf>true</UseWpf>
+        <EnableDynamicLoading>true</EnableDynamicLoading>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Fody" Version="6.8.0" />
-        <PackageReference Include="Costura.Fody" Version="5.7.0" />
-        <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
         <PackageReference Include="SpotifyAPI.Web" Version="7.0.0" />
         <PackageReference Include="SpotifyAPI.Web.Auth" Version="7.0.0" />
     </ItemGroup>
