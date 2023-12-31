@@ -6,6 +6,7 @@ using SpotifyAPI.Web;
 using SpotifyAPI.Web.Auth;
 using System.IO;
 using Newtonsoft.Json;
+using System.Windows.Input;
 
 namespace PowerToys_Run_Spotify;
 
@@ -44,7 +45,10 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
         ClientId = (string)GetSettingOrDefault(settings, nameof(ClientId));
     }
 
-    private object GetSettingOrDefault(PowerLauncherPluginSettings settings, string key)
+    private object GetSettingOrDefault(
+        PowerLauncherPluginSettings settings,
+        string key
+    )
     {
         var defaultOptions = ((ISettingProvider)this).AdditionalOptions;
         var defaultOption = defaultOptions.First(x => x.Key == key);
@@ -98,12 +102,20 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
         var searchRequest = new SearchRequest(SearchRequest.Types.All, query.Search);
         var searchResponse = _spotifyClient.Search.Item(searchRequest).GetAwaiter().GetResult();
 
+        // TODO: Result.TitleHighlightData
+
         if (searchResponse.Tracks.Items != null)
+        {
             results.AddRange(searchResponse.Tracks.Items.Select(track => new Result
             {
                 Title = track.Name,
-                SubTitle = string.Join(", ", track.Artists.Select(x => x.Name)),
+                SubTitle = $"Song • By {string.Join(", ", track.Artists.Select(x => x.Name))}",
                 Icon = () => new BitmapImage(new Uri(track.Album.Images.OrderBy(x => x.Width * x.Height).First().Url)),
+                ContextData = new ContextData
+                {
+                    ResultType = ResultType.Song,
+                    Uri = track.Uri
+                },
                 Action = context =>
                 {
                     _spotifyClient.Player.ResumePlayback(new PlayerResumePlaybackRequest{
@@ -113,32 +125,59 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
                 }
             }));
 
+            results.AddRange(searchResponse.Artists.Items.Select(artist => new Result
+            {
+                Title = artist.Name,
+                SubTitle = "Artist",
+                Icon = () => new BitmapImage(new Uri(artist.Images.OrderBy(x => x.Width * x.Height).First().Url)),
+                ContextData = new ContextData
+                {
+                    ResultType = ResultType.Artist,
+                    Uri = artist.Uri
+                },
+                Action = context =>
+                {
+                    _spotifyClient.Player.ResumePlayback(new PlayerResumePlaybackRequest{
+                        ContextUri = artist.Uri
+                    });
+                    return true;
+                }
+            }));
+        }
+
         return results;
     }
 
-    public List<ContextMenuResult> LoadContextMenus(Result selectedResult)
+    public List<ContextMenuResult> LoadContextMenus(Result result)
     {
-        return new List<ContextMenuResult>
+        var results = new List<ContextMenuResult>();
+
+        var data = result.ContextData as ContextData;
+
+        switch (data.ResultType)
         {
-            // new ContextMenuResult
-            // {
-            //     Title = "Play",
-            //     Glyph = "\xE768",
-            //     FontFamily = "Segoe MDL2 Assets",
-            //     AcceleratorKey = Key.P,
-            //     AcceleratorModifiers = ModifierKeys.Control,
-            //     Action = e => true,
-            // },
-            // new ContextMenuResult
-            // {
-            //     Title = "Pause",
-            //     Glyph = "\xE769",
-            //     FontFamily = "Segoe MDL2 Assets",
-            //     AcceleratorKey = Key.C,
-            //     AcceleratorModifiers = ModifierKeys.Control,
-            //     Action = e => true,
-            // }
-        };
+            case ResultType.Song:
+                results.Add(new ContextMenuResult
+                {
+                    Title = $"Add to queue (Shift+Enter)",
+                    Glyph = "\xF8AA",
+                    FontFamily = "Segoe MDL2 Assets",
+                    AcceleratorKey = Key.Enter,
+                    AcceleratorModifiers = ModifierKeys.Shift,
+                    Action = context =>
+                    {
+                        _spotifyClient.Player.AddToQueue(new PlayerAddToQueueRequest(data.Uri));
+                        return true;
+                    },
+                });
+            break;
+
+            case ResultType.Artist:
+            default:
+            break;
+        }
+
+        return results;
     }
 
     private async Task LoginToSpotify(string clientId)
