@@ -105,7 +105,6 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
         // TODO: Result.TitleHighlightData
 
         if (searchResponse.Tracks.Items != null)
-        {
             results.AddRange(searchResponse.Tracks.Items.Select(track => new Result
             {
                 Title = track.Name,
@@ -125,6 +124,7 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
                 }
             }));
 
+        if (searchResponse.Artists.Items != null)
             results.AddRange(searchResponse.Artists.Items.Select(artist => new Result
             {
                 Title = artist.Name,
@@ -143,7 +143,26 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
                     return true;
                 }
             }));
-        }
+
+        if (searchResponse.Playlists.Items != null)
+            results.AddRange(searchResponse.Playlists.Items.Select(playList => new Result
+            {
+                Title = playList.Name,
+                SubTitle = "Playlist",
+                Icon = () => new BitmapImage(new Uri(playList.Images.OrderBy(x => x.Width * x.Height).First().Url)),
+                ContextData = new ContextData
+                {
+                    ResultType = ResultType.Playlist,
+                    Uri = playList.Uri
+                },
+                Action = context =>
+                {
+                    _spotifyClient.Player.ResumePlayback(new PlayerResumePlaybackRequest{
+                        ContextUri = playList.Uri
+                    });
+                    return true;
+                }
+            }));
 
         return results;
     }
