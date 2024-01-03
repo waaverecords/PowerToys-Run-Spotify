@@ -90,16 +90,9 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
         if (_spotifyClient == null)
             _spotifyClient = GetSpotifyClient(ClientId).GetAwaiter().GetResult();
 
-        // var playback = _spotifyClient.Player.GetCurrentPlayback().GetAwaiter().GetResult();
-        // if (playback?.Item is FullTrack track)
-        //     results.Add(new Result
-        //     {
-        //         Title = track.Name,
-        //         SubTitle = string.Join(", ", track.Artists.Select(x => x.Name)),
-        //         Icon = () => new BitmapImage(new Uri(track.Album.Images.OrderBy(x => x.Width * x.Height).First().Url))
-        //     });
-
         var searchRequest = new SearchRequest(SearchRequest.Types.All, query.Search);
+        searchRequest.Limit = 5;
+
         var searchResponse = _spotifyClient.Search.Item(searchRequest).GetAwaiter().GetResult();
 
         // TODO: Result.TitleHighlightData
@@ -164,7 +157,48 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
                 }
             }));
 
+        foreach (var result in results)
+            result.Score = GetScore(result.Title, query.Search);
+
         return results;
+    }
+
+    private int GetScore(
+        string str1,
+        string str2
+    )
+    {
+        // Levenshtein distance
+
+        str1 = str1.ToLower();
+        str2 = str2.ToLower();
+
+        var m = str1.Length;
+        var n = str2.Length;
+
+        var dp = new int[m + 1, n + 1];
+
+        for (int i = 0; i <= m; i++)
+            dp[i, 0] = i;
+        for (int j = 0; j <= n; j++)
+            dp[0, j] = j;
+
+        for (int i = 1; i <= m; i++)
+            for (int j = 1; j <= n; j++)
+            {
+                var cost = (str1[i - 1] == str2[j - 1]) ? 0 : 1;
+                dp[i, j] = Math.Min(
+                    Math.Min(
+                        dp[i - 1, j] + 1, // deletion
+                        dp[i, j - 1] + 1 // insertion
+                    ),
+                    dp[i - 1, j - 1] + cost // substitution
+                ); 
+            }
+
+        var d = dp[m, n];
+
+        return 100 - d;
     }
 
     public List<ContextMenuResult> LoadContextMenus(Result result)
