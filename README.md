@@ -14,7 +14,19 @@ This is a plugin for [PowerToys](https://github.com/microsoft/PowerToys) Run tha
 
 ## Installation
 
-Current release version of PowerToys (Release v0.76.2) does not support dynamic loading of Dlls, and as such, installing the plugin does not work. However, dynamic loading is supported on branch Master and will be included in the next Release version.
+> [!IMPORTANT]
+> Spotify Premium is necessary to control the player.
+
+> [!WARNING]
+> Current release version of PowerToys (Release v0.76.2) does not support dynamic loading of Dlls, and as such, installing the plugin does not work. However, dynamic loading is supported on branch Master and will be included in the next Release version.
+
+1. Head to your Spotify [developper dashboard](https://developer.spotify.com/).
+2. Create a new app with:
+    -  `Redirect URI` set to `http://localhost:5543/callback`
+    - `Web API` and `Web Playback SDK` checked
+3. Go to the settings of the newly created app and save somewhere the value of `Client ID`. It is needed later.
+4. Open PowerToys and go to the PowerToys Run section. Scroll down until you find the Spotify section. Click on it.
+5. Set the value of `Client ID` with the value saved earlier.
 
 ## Usage
 
