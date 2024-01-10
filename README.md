@@ -22,7 +22,7 @@ This is a plugin for [PowerToys](https://github.com/microsoft/PowerToys) Run tha
 
 1. Head to your Spotify [developper dashboard](https://developer.spotify.com/).
 2. Create a new app with:
-    -  `Redirect URI` set to `http://localhost:5543/callback`
+    - `Redirect URI` set to `http://localhost:5543/callback`
     - `Web API` and `Web Playback SDK` checked
 3. Go to the settings of the newly created app and save somewhere the value of `Client ID`. It is needed later.
 4. Open PowerToys and go to the PowerToys Run section. Scroll down until you find the Spotify section. Click on it.
