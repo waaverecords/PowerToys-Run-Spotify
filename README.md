@@ -17,9 +17,6 @@ This is a plugin for [PowerToys](https://github.com/microsoft/PowerToys) Run tha
 > [!IMPORTANT]
 > Spotify Premium is necessary to control the player.
 
-> [!WARNING]
-> Current release version of PowerToys (Release v0.76.2) does not support dynamic loading of Dlls, and as such, installing the plugin does not work. However, dynamic loading is supported on branch Master and will be included in the next Release version.
-
 1. Head to your Spotify [developper dashboard](https://developer.spotify.com/).
 2. Create a new app with:
     - `Redirect URI` set to `http://localhost:5543/callback`

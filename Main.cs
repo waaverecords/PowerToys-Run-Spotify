@@ -17,7 +17,8 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
     public string Description => "Searches and controls Spotify.";
 
     internal string ClientId { get; private set; }
-    private string  _credentialsPath = "credentials.json";
+    private string  _appDataPath;
+    private string  _credentialsPath;
     private SpotifyClient _spotifyClient;
 
     IEnumerable<PluginAdditionalOption> ISettingProvider.AdditionalOptions => new List<PluginAdditionalOption>()
@@ -33,6 +34,8 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
 
     public void Init(PluginInitContext context)
     {
+        _appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "PowerToys-Run-Spotify");
+        _credentialsPath = Path.Combine(_appDataPath, "credentials.json");;
     }
 
     public Control CreateSettingPanel()
@@ -207,7 +210,7 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
 
         var data = result.ContextData as ContextData;
 
-        switch (data.ResultType)
+        switch (data?.ResultType)
         {
             case ResultType.Song:
                 results.Add(new ContextMenuResult
@@ -226,6 +229,7 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
             break;
 
             case ResultType.Artist:
+            case ResultType.Playlist:
             default:
             break;
         }
@@ -248,7 +252,10 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
             var tokenRequest = new PKCETokenRequest(clientId, response.Code, authServer.BaseUri, verifier);
             var client = new OAuthClient();
             var tokenResponse = await client.RequestToken(tokenRequest);
-            await File.WriteAllTextAsync(_credentialsPath, JsonConvert.SerializeObject(tokenResponse));
+            
+            Directory.CreateDirectory(_appDataPath);
+            File.WriteAllText(_credentialsPath, JsonConvert.SerializeObject(tokenResponse));
+
             tcs.SetResult();
         };
 
