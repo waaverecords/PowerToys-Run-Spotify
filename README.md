@@ -8,8 +8,8 @@ This is a plugin for [PowerToys](https://github.com/microsoft/PowerToys) Run tha
 
 ## Features
 
-- Search for tracks, artists and playlists
-- Play tracks, artists and playlists
+- Search for tracks, albums, artists and playlists
+- Play tracks, albums, artists and playlists
 - Add track to queue
 
 ## Installation
