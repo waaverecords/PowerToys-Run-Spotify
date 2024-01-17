@@ -120,6 +120,27 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
                 }
             }));
 
+        if (searchResponse.Albums.Items != null)
+            results.AddRange(searchResponse.Albums.Items.Select(album => new Result
+            {
+                Title = album.Name,
+                SubTitle = "Album",
+                Icon = () => new BitmapImage(new Uri(album.Images.OrderBy(x => x.Width * x.Height).First().Url)),
+                ContextData = new ContextData
+                {
+                    ResultType = ResultType.Album,
+                    Uri = album.Uri
+                },
+                Action = context =>
+                {
+                    _spotifyClient.Player.ResumePlayback(new PlayerResumePlaybackRequest{
+                        ContextUri = album.Uri
+                    });
+                    return true;
+                }
+            }));
+
+
         if (searchResponse.Artists.Items != null)
             results.AddRange(searchResponse.Artists.Items.Select(artist => new Result
             {

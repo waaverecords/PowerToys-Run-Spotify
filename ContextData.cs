@@ -9,6 +9,7 @@ public class ContextData
 public enum ResultType
 {
     Song,
+    Album,
     Artist,
     Playlist
 }
