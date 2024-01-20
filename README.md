@@ -40,7 +40,7 @@ This is a plugin for [PowerToys](https://github.com/microsoft/PowerToys) Run tha
 
 Contributions are welcome! If you have any ideas, improvements, or bug fixes, please open an issue or submit a pull request.
 
-To contribute to KickNodeJS, follow these steps:
+To contribute to PowerToys-Run-Spotify, follow these steps:
 
 1. Fork the repository.
 2. Create a new branch for your feature/fix.
