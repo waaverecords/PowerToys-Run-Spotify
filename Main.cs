@@ -7,6 +7,8 @@ using SpotifyAPI.Web.Auth;
 using System.IO;
 using Newtonsoft.Json;
 using System.Windows.Input;
+using System.Net;
+using System.Diagnostics;
 
 namespace PowerToys_Run_Spotify;
 
@@ -35,7 +37,7 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
     public void Init(PluginInitContext context)
     {
         _appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "PowerToys-Run-Spotify");
-        _credentialsPath = Path.Combine(_appDataPath, "credentials.json");;
+        _credentialsPath = Path.Combine(_appDataPath, "credentials.json");
     }
 
     public Control CreateSettingPanel()
@@ -93,8 +95,10 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
         if (_spotifyClient == null)
             _spotifyClient = GetSpotifyClient(ClientId).GetAwaiter().GetResult();
 
-        var searchRequest = new SearchRequest(SearchRequest.Types.All, query.Search);
-        searchRequest.Limit = 5;
+        var searchRequest = new SearchRequest(SearchRequest.Types.All, query.Search)
+        {
+            Limit = 5
+        };
 
         var searchResponse = _spotifyClient.Search.Item(searchRequest).GetAwaiter().GetResult();
 
@@ -113,9 +117,10 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
                 },
                 Action = context =>
                 {
-                    _spotifyClient.Player.ResumePlayback(new PlayerResumePlaybackRequest{
-                        Uris = new List<string> { track.Uri }
-                    });
+                    EnsureActiveDevice(
+                        async (player, request) => await player.ResumePlayback(request),
+                        new PlayerResumePlaybackRequest { Uris = new List<string> { track.Uri } }
+                    );
                     return true;
                 }
             }));
@@ -133,9 +138,10 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
                 },
                 Action = context =>
                 {
-                    _spotifyClient.Player.ResumePlayback(new PlayerResumePlaybackRequest{
-                        ContextUri = album.Uri
-                    });
+                    EnsureActiveDevice(
+                        async (player, request) => await player.ResumePlayback(request),
+                        new PlayerResumePlaybackRequest { ContextUri = album.Uri }
+                    );
                     return true;
                 }
             }));
@@ -154,9 +160,10 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
                 },
                 Action = context =>
                 {
-                    _spotifyClient.Player.ResumePlayback(new PlayerResumePlaybackRequest{
-                        ContextUri = artist.Uri
-                    });
+                    EnsureActiveDevice(
+                        async (player, request) => await player.ResumePlayback(request),
+                        new PlayerResumePlaybackRequest { ContextUri = artist.Uri }
+                    );
                     return true;
                 }
             }));
@@ -174,9 +181,10 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
                 },
                 Action = context =>
                 {
-                    _spotifyClient.Player.ResumePlayback(new PlayerResumePlaybackRequest{
-                        ContextUri = playList.Uri
-                    });
+                    EnsureActiveDevice(
+                        async (player, request) => await player.ResumePlayback(request),
+                        new PlayerResumePlaybackRequest { ContextUri = playList.Uri}
+                    );
                     return true;
                 }
             }));
@@ -243,7 +251,10 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
                     AcceleratorModifiers = ModifierKeys.Shift,
                     Action = context =>
                     {
-                        _spotifyClient.Player.AddToQueue(new PlayerAddToQueueRequest(data.Uri));
+                        EnsureActiveDevice(
+                            async (player, request) => await player.AddToQueue(request),
+                            new PlayerAddToQueueRequest(data.Uri)
+                        );
                         return true;
                     },
                 });
@@ -318,5 +329,64 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
             .WithAuthenticator(authenticator);
 
         return new SpotifyClient(config);
+    }
+
+    private async Task<TResult> EnsureActiveDevice<T, TResult>(
+        Func<IPlayerClient, T, Task<TResult>> callback,
+        T request
+    )
+    {
+        var requestType = request.GetType();
+        var deviceIdProperty = requestType.GetProperty("DeviceId");
+        if (deviceIdProperty == null)
+            throw new InvalidOperationException ($"Request of type {requestType.Name} does not need an active device.");
+
+        try
+        {
+            return await callback(_spotifyClient.Player, request);
+        }
+        catch (APIException exception)
+        {
+            if (exception.Response?.StatusCode != HttpStatusCode.NotFound)
+                throw;
+
+            var possiblePaths = new List<string>
+            {
+                Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "Spotify", "Spotify.exe"),
+                Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), "Spotify", "Spotify.exe"),
+            };
+
+            var windowsAppsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Microsoft", "WindowsApps");
+
+            if (Directory.Exists(windowsAppsPath))
+            {
+                var subDirectories = Directory.GetDirectories(windowsAppsPath, "SpotifyAB.SpotifyMusic_*");
+                foreach (string subDirectory in subDirectories)
+                {
+                    var exePath = Path.Combine(subDirectory, "Spotify.exe");
+                    if (File.Exists(exePath))
+                        possiblePaths.Add(exePath);
+                }
+            }
+
+            foreach (var path in possiblePaths)
+            {
+                if (!File.Exists(path))
+                    continue;
+
+                if (Process.Start(path) == null)
+                    throw new ApplicationException($"Failed to start process {path}");
+
+                Thread.Sleep(1000 * 10); // wait for Spotify to open
+
+                var deviceResponse = await _spotifyClient.Player.GetAvailableDevices();
+
+                deviceIdProperty.SetValue(request, deviceResponse.Devices.First()?.Id);
+
+                return await callback(_spotifyClient.Player, request);;
+            }
+
+            throw new ApplicationException("Could not find the Spotify executable");
+        }
     }
 }
