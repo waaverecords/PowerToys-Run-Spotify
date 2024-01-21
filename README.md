@@ -10,7 +10,7 @@ This is a plugin for [PowerToys](https://github.com/microsoft/PowerToys) Run tha
 
 - Search for tracks, albums, artists and playlists
 - Play tracks, albums, artists and playlists
-- Add track to queue
+- Add track to queue (Shift+Enter)
 
 ## Installation
 
