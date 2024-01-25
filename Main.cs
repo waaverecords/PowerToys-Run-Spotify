@@ -92,6 +92,9 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
 
         var results = new List<Result>();
         
+        if (string.IsNullOrEmpty(query.Search?.Trim()))
+            return results;
+
         if (_spotifyClient == null)
             _spotifyClient = GetSpotifyClient(ClientId).GetAwaiter().GetResult();
 
