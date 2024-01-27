@@ -383,8 +383,9 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
                 Thread.Sleep(1000 * 10); // wait for Spotify to open
 
                 var deviceResponse = await _spotifyClient.Player.GetAvailableDevices();
+                var device = deviceResponse.Devices.FirstOrDefault(x => x.Name == Environment.MachineName);
 
-                deviceIdProperty.SetValue(request, deviceResponse.Devices.First()?.Id);
+                deviceIdProperty.SetValue(request, device?.Id);
 
                 return await callback(_spotifyClient.Player, request);;
             }
