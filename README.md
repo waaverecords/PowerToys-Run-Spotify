@@ -18,9 +18,9 @@ This is a plugin for [PowerToys](https://github.com/microsoft/PowerToys) Run tha
 > Spotify Premium is necessary to control the player.
 
 1. Download the [newest release](https://github.com/waaverecords/PowerToys-Run-Spotify/releases) zip file.
-2. Extract the content of the zip file to the `RunPlugins` folder of your PowerToys' installation. Usually `C:\Program Files\PowerToys\RunPlugins`.
+2. Extract the content of the zip file to the `RunPlugins` folder of your PowerToys' installation. Usually `C:\Program Files\PowerToys\RunPlugins`, or `%LOCALAPPDATA%\Microsoft\PowerToys\PowerToys Run\Plugins`.
 3. Restart PowerToys.
-4. Head to your Spotify [developper dashboard](https://developer.spotify.com/).
+4. Head to your Spotify [developer dashboard](https://developer.spotify.com/).
 5. Create a new app with:
     - `Redirect URI` set to `http://localhost:5543/callback`
     - `Web API` and `Web Playback SDK` checked
