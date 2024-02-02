@@ -11,6 +11,8 @@ This is a plugin for [PowerToys](https://github.com/microsoft/PowerToys) Run tha
 - Search for tracks, albums, artists and playlists
 - Play tracks, albums, artists and playlists
 - Add track to queue (Shift+Enter)
+- Pause and resume playback
+- Skip or go back to the prior track
 
 ## Installation
 
@@ -31,10 +33,15 @@ This is a plugin for [PowerToys](https://github.com/microsoft/PowerToys) Run tha
 10. Activate PowerToys Run again and type `sp lofi`. If the installation was a succes, you should see results.
 
 ## Usage
+Open PowerToys Run (default shortcut is ```Alt+Space```).
 
-1. Open PowerToys Run (default shortcut is ```Alt+Space```).
-2. Type ```sp``` followed by your search query.
-3. Select a track, artist or playlist to play and press ```Enter``` to play it.
+### Play a song
+1. Type ```sp``` followed by your search query.
+2. Select a track, artist or playlist to play and press ```Enter``` to play it.
+
+### Control the playback
+1. Type ```sp```.
+2. Select your desired action and press ```Enter```
 
 ## Contributing
 
@@ -54,7 +61,7 @@ Together, we can make PowerToys-Run-Spotify better!
 
 ## Development
 
-To build and install the plugin, first modify paths found in `BuildAndInstallPlugin.bat` at the root of this repo. Then it run it. This will build the repo then copy the files to the plugins folder for PowerToys Run.
+To build and install the plugin, run `BuildAndInstallPlugin.bat`. This will build the repo then copy the files to the plugins folder for PowerToys Run.
 
 ## License
 This project is licensed under the [MIT License](LICENSE)

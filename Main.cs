@@ -58,7 +58,7 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
         var defaultOptions = ((ISettingProvider)this).AdditionalOptions;
         var defaultOption = defaultOptions.First(x => x.Key == key);
         var option = settings?.AdditionalOptions?.FirstOrDefault(x => x.Key == key);
-        
+
         switch(defaultOption.PluginOptionType)
         {
             case PluginAdditionalOption.AdditionalOptionType.Textbox:
@@ -91,12 +91,14 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
                 }};
 
         var results = new List<Result>();
-        
-        if (string.IsNullOrEmpty(query.Search?.Trim()))
-            return results;
 
         if (_spotifyClient == null)
             _spotifyClient = GetSpotifyClient(ClientId).GetAwaiter().GetResult();
+
+        if (string.IsNullOrEmpty(query.Search?.Trim()))
+        {
+            return GetBasicActions();
+        }
 
         var searchRequest = new SearchRequest(SearchRequest.Types.All, query.Search)
         {
@@ -198,6 +200,74 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
         return results;
     }
 
+    private List<Result> GetBasicActions()
+    {
+        List<Result> results = new List<Result>();
+
+        var previousSong = new Result
+        {
+            Title = "Jump to Previous Song",
+            Action = context =>
+            {
+                _ = EnsureActiveDevice(
+                async (player, request) => await player.SkipPrevious(request),
+                    new PlayerSkipPreviousRequest()
+                );
+                return true;
+            },
+            Score = 0
+        };
+
+        var nextSong = new Result
+        {
+            Title = "Jump to Next Song",
+            Action = context =>
+            {
+                _ = EnsureActiveDevice(
+                    async (player, request) => await player.SkipNext(request),
+                    new PlayerSkipNextRequest()
+                );
+                return true;
+            },
+            Score = 1
+        };
+
+        var pause = new Result
+        {
+            Title = "Pause Current Song",
+            Action = context =>
+            {
+                _ = EnsureActiveDevice(
+                    async (player, request) => await player.PausePlayback(request),
+                    new PlayerPausePlaybackRequest()
+                );
+                return true;
+            },
+            Score = 2
+        };
+
+        var resume = new Result
+        {
+            Title = "Resume Current Song",
+            Action = context =>
+            {
+                _ = EnsureActiveDevice(
+                    async (player, request) => await player.ResumePlayback(request),
+                    new PlayerResumePlaybackRequest()
+                );
+                return true;
+            },
+            Score = 3
+        };
+
+        results.Add(previousSong);
+        results.Add(nextSong);
+        results.Add(pause);
+        results.Add(resume);
+
+        return results;
+    }
+
     private int GetScore(
         string str1,
         string str2
@@ -228,7 +298,7 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
                         dp[i, j - 1] + 1 // insertion
                     ),
                     dp[i - 1, j - 1] + cost // substitution
-                ); 
+                );
             }
 
         var d = dp[m, n];
@@ -261,12 +331,12 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
                         return true;
                     },
                 });
-            break;
+                break;
 
             case ResultType.Artist:
             case ResultType.Playlist:
             default:
-            break;
+                break;
         }
 
         return results;
@@ -287,7 +357,7 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
             var tokenRequest = new PKCETokenRequest(clientId, response.Code, authServer.BaseUri, verifier);
             var client = new OAuthClient();
             var tokenResponse = await client.RequestToken(tokenRequest);
-            
+
             Directory.CreateDirectory(_appDataPath);
             File.WriteAllText(_credentialsPath, JsonConvert.SerializeObject(tokenResponse));
 
