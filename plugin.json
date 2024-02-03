@@ -9,7 +9,7 @@
     "Website": "https://github.com/waaverecords/PowerToys-Run-Spotify",
     "ExecuteFileName": "PowerToys-Run-Spotify.dll",
     "IsGlobal": false,
-    "IcoPathDark": "images\\spotify.dark.png",
-    "IcoPathLight": "images\\spotify.light.png",
+    "IcoPathDark": "images\\dark\\spotify.png",
+    "IcoPathLight": "images\\light\\spotify.png",
     "DynamicLoading": true
 }

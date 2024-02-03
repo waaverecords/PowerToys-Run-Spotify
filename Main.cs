@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using System.Windows.Input;
 using System.Net;
 using System.Diagnostics;
+using ManagedCommon;
 
 namespace PowerToys_Run_Spotify;
 
@@ -22,6 +23,7 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
     private string  _appDataPath;
     private string  _credentialsPath;
     private SpotifyClient _spotifyClient;
+    private string _imageDirectory { get; set; }
 
     IEnumerable<PluginAdditionalOption> ISettingProvider.AdditionalOptions => new List<PluginAdditionalOption>()
     {
@@ -38,6 +40,9 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
     {
         _appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "PowerToys-Run-Spotify");
         _credentialsPath = Path.Combine(_appDataPath, "credentials.json");
+
+        context.API.ThemeChanged += OnThemeChanged;
+        OnThemeChanged(Theme.Light, context.API.GetCurrentTheme());
     }
 
     public Control CreateSettingPanel()
@@ -68,6 +73,13 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
         throw new NotSupportedException();
     }
 
+    private void OnThemeChanged(
+        Theme pre,
+        Theme now
+    ) {
+        _imageDirectory = (now == Theme.Light || now == Theme.HighContrastWhite) ? "images/light" : "images/dark";
+    }
+
     public List<Result> Query(Query query)
     {
         if (string.IsNullOrEmpty(ClientId))
@@ -85,7 +97,7 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
                     SubTitle = "Login to authorize the use of the Spotify API",
                     Action = context =>
                     {
-                        LoginToSpotify(ClientId);
+                        _ = LoginToSpotify(ClientId);
                         return true;
                     }
                 }};
@@ -96,9 +108,7 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
             _spotifyClient = GetSpotifyClient(ClientId).GetAwaiter().GetResult();
 
         if (string.IsNullOrEmpty(query.Search?.Trim()))
-        {
             return GetBasicActions();
-        }
 
         var searchRequest = new SearchRequest(SearchRequest.Types.All, query.Search)
         {
@@ -122,7 +132,7 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
                 },
                 Action = context =>
                 {
-                    EnsureActiveDevice(
+                    _ = EnsureActiveDevice(
                         async (player, request) => await player.ResumePlayback(request),
                         new PlayerResumePlaybackRequest { Uris = new List<string> { track.Uri } }
                     );
@@ -143,7 +153,7 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
                 },
                 Action = context =>
                 {
-                    EnsureActiveDevice(
+                    _ = EnsureActiveDevice(
                         async (player, request) => await player.ResumePlayback(request),
                         new PlayerResumePlaybackRequest { ContextUri = album.Uri }
                     );
@@ -165,7 +175,7 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
                 },
                 Action = context =>
                 {
-                    EnsureActiveDevice(
+                    _ = EnsureActiveDevice(
                         async (player, request) => await player.ResumePlayback(request),
                         new PlayerResumePlaybackRequest { ContextUri = artist.Uri }
                     );
@@ -186,7 +196,7 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
                 },
                 Action = context =>
                 {
-                    EnsureActiveDevice(
+                    _ = EnsureActiveDevice(
                         async (player, request) => await player.ResumePlayback(request),
                         new PlayerResumePlaybackRequest { ContextUri = playList.Uri}
                     );
@@ -204,23 +214,25 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
     {
         List<Result> results = new List<Result>();
 
-        var previousSong = new Result
+        var previousTrack = new Result
         {
-            Title = "Jump to Previous Song",
+            Title = "Previous track",
+            IcoPath = Path.Combine(_imageDirectory, "previous.png"),
             Action = context =>
             {
                 _ = EnsureActiveDevice(
-                async (player, request) => await player.SkipPrevious(request),
+                    async (player, request) => await player.SkipPrevious(request),
                     new PlayerSkipPreviousRequest()
                 );
                 return true;
             },
-            Score = 0
+            Score = 25
         };
 
-        var nextSong = new Result
+        var nextTrack = new Result
         {
-            Title = "Jump to Next Song",
+            Title = "Next track",
+            IcoPath = Path.Combine(_imageDirectory, "next.png"),
             Action = context =>
             {
                 _ = EnsureActiveDevice(
@@ -229,12 +241,13 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
                 );
                 return true;
             },
-            Score = 1
+            Score = 50
         };
 
-        var pause = new Result
+        var pausePlayback = new Result
         {
-            Title = "Pause Current Song",
+            Title = "Pause playback",
+            IcoPath = Path.Combine(_imageDirectory, "pause.png"),
             Action = context =>
             {
                 _ = EnsureActiveDevice(
@@ -243,12 +256,13 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
                 );
                 return true;
             },
-            Score = 2
+            Score = 75
         };
 
-        var resume = new Result
+        var resumePlayback = new Result
         {
-            Title = "Resume Current Song",
+            Title = "Resume playback",
+            IcoPath = Path.Combine(_imageDirectory, "play.png"),
             Action = context =>
             {
                 _ = EnsureActiveDevice(
@@ -257,13 +271,13 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
                 );
                 return true;
             },
-            Score = 3
+            Score = 0
         };
 
-        results.Add(previousSong);
-        results.Add(nextSong);
-        results.Add(pause);
-        results.Add(resume);
+        results.Add(previousTrack);
+        results.Add(nextTrack);
+        results.Add(pausePlayback);
+        results.Add(resumePlayback);
 
         return results;
     }
@@ -324,7 +338,7 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
                     AcceleratorModifiers = ModifierKeys.Shift,
                     Action = context =>
                     {
-                        EnsureActiveDevice(
+                        _ = EnsureActiveDevice(
                             async (player, request) => await player.AddToQueue(request),
                             new PlayerAddToQueueRequest(data.Uri)
                         );
@@ -333,6 +347,7 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
                 });
                 break;
 
+            case ResultType.Album:
             case ResultType.Artist:
             case ResultType.Playlist:
             default:
