@@ -19,18 +19,19 @@ This is a plugin for [PowerToys](https://github.com/microsoft/PowerToys) Run tha
 > [!IMPORTANT]
 > Spotify Premium is necessary to control the player.
 
-1. Download the [newest release](https://github.com/waaverecords/PowerToys-Run-Spotify/releases) zip file.
-2. Extract the content of the zip file to the `RunPlugins` folder of your PowerToys' installation. Usually `C:\Program Files\PowerToys\RunPlugins`, or `%LOCALAPPDATA%\Microsoft\PowerToys\PowerToys Run\Plugins`.
-3. Restart PowerToys.
-4. Head to your Spotify [developer dashboard](https://developer.spotify.com/).
-5. Create a new app with:
+1. Ensure you have the latest version of PowerToys installed.
+2. Download the [newest release](https://github.com/waaverecords/PowerToys-Run-Spotify/releases) zip file.
+3. Extract the content of the zip file to the `RunPlugins` folder of your PowerToys' installation. Usually `C:\Program Files\PowerToys\RunPlugins`, or `%LOCALAPPDATA%\Microsoft\PowerToys\PowerToys Run\Plugins`.
+4. Restart PowerToys.
+5. Head to your Spotify [developer dashboard](https://developer.spotify.com/).
+6. Create a new app with:
     - `Redirect URI` set to `http://localhost:5543/callback`
     - `Web API` and `Web Playback SDK` checked
-6. Go to the settings of the newly created app and save somewhere the value of `Client ID`. It is needed later.
-7. Open PowerToys and go to the PowerToys Run section. Scroll down until you find the Spotify section. Click on it.
-8. Set the value of `Client ID` with the value saved earlier.
-9. Activate PowerToys Run and type `sp`. You should see a result asking you to login to your Spotify account. Hit `enter` and go through the login process.
-10. Activate PowerToys Run again and type `sp lofi`. If the installation was a succes, you should see results.
+7. Go to the settings of the newly created app and save somewhere the value of `Client ID`. It is needed later.
+8. Open PowerToys and go to the PowerToys Run section. Scroll down until you find the Spotify section. Click on it.
+9. Set the value of `Client ID` with the value saved earlier.
+10. Activate PowerToys Run and type `sp`. You should see a result asking you to login to your Spotify account. Hit `enter` and go through the login process.
+11. Activate PowerToys Run again and type `sp lofi`. If the installation was a succes, you should see results.
 
 ## Usage
 
