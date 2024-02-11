@@ -33,6 +33,14 @@ This is a plugin for [PowerToys](https://github.com/microsoft/PowerToys) Run tha
 10. Activate PowerToys Run and type `sp`. You should see a result asking you to login to your Spotify account. Hit `enter` and go through the login process.
 11. Activate PowerToys Run again and type `sp lofi`. If the installation was a succes, you should see results.
 
+## Update the plugin
+
+1. Ensure you have the latest version of PowerToys installed.
+2. Close PowerToys.
+2. Download the [newest release](https://github.com/waaverecords/PowerToys-Run-Spotify/releases) zip file.
+3. Extract the content of the zip file to the `RunPlugins` folder of your PowerToys' installation. Usually `C:\Program Files\PowerToys\RunPlugins`, or `%LOCALAPPDATA%\Microsoft\PowerToys\PowerToys Run\Plugins`.
+4. Restart PowerToys.
+
 ## Usage
 
 Open PowerToys Run (default shortcut is ```Alt+Space```).
@@ -68,4 +76,5 @@ Together, we can make PowerToys-Run-Spotify better!
 To build and install the plugin, run `BuildAndInstallPlugin.bat`. This will build the repo then copy the files to the plugins folder for PowerToys Run.
 
 ## License
+
 This project is licensed under the [MIT License](LICENSE)
