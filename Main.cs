@@ -274,10 +274,90 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
             Score = 0
         };
 
+        var turnOnShuffle = new Result
+        {
+            Title = "Turn on shuffle",
+            IcoPath = Path.Combine(_imageDirectory, "shuffle.png"),
+            Action = context =>
+            {
+                _ = EnsureActiveDevice(
+                    async (player, request) => await player.SetShuffle(request),
+                    new PlayerShuffleRequest(true)
+                );
+                return true;
+            },
+            Score = 0
+        };
+
+        var turnOffShuffle = new Result
+        {
+            Title = "Turn off shuffle",
+            IcoPath = Path.Combine(_imageDirectory, "shuffle.png"),
+            Action = context =>
+            {
+                _ = EnsureActiveDevice(
+                    async (player, request) => await player.SetShuffle(request),
+                    new PlayerShuffleRequest(false)
+                );
+                return true;
+            },
+            Score = 0
+        };
+
+        var setRepeatTrack = new Result
+        {
+            Title = "Set repeat to track",
+            IcoPath = Path.Combine(_imageDirectory, "repeat.png"),
+            Action = context =>
+            {
+                _ = EnsureActiveDevice(
+                    async (player, request) => await player.SetRepeat(request),
+                    new PlayerSetRepeatRequest(PlayerSetRepeatRequest.State.Track)
+                );
+                return true;
+            },
+            Score = 0
+        };
+
+        var setRepeatContext = new Result
+        {
+            Title = "Set repeat to context",
+            IcoPath = Path.Combine(_imageDirectory, "repeat.png"),
+            Action = context =>
+            {
+                _ = EnsureActiveDevice(
+                    async (player, request) => await player.SetRepeat(request),
+                    new PlayerSetRepeatRequest(PlayerSetRepeatRequest.State.Context)
+                );
+                return true;
+            },
+            Score = 0
+        };
+
+        var setRepeatOff = new Result
+        {
+            Title = "Set repeat to off",
+            IcoPath = Path.Combine(_imageDirectory, "repeat.png"),
+            Action = context =>
+            {
+                _ = EnsureActiveDevice(
+                    async (player, request) => await player.SetRepeat(request),
+                    new PlayerSetRepeatRequest(PlayerSetRepeatRequest.State.Off)
+                );
+                return true;
+            },
+            Score = 0
+        };
+
         results.Add(previousTrack);
         results.Add(nextTrack);
         results.Add(pausePlayback);
         results.Add(resumePlayback);
+        results.Add(turnOnShuffle);
+        results.Add(turnOffShuffle);
+        results.Add(setRepeatTrack);
+        results.Add(setRepeatContext);
+        results.Add(setRepeatOff);
 
         return results;
     }
