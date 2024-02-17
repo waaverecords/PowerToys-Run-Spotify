@@ -13,6 +13,8 @@ This is a plugin for [PowerToys](https://github.com/microsoft/PowerToys) Run tha
 - Add song to queue (Shift+Enter)
 - Pause and resume track
 - Go to previous or next track
+- Turn shuffle on and off
+- Set repeat to track, context or off
 
 ## Installation
 
