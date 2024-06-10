@@ -218,7 +218,7 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
         var previousTrack = new Result
         {
             Title = "Previous track",
-            IcoPath = Path.Combine(_imageDirectory, "toggle.png"),
+            IcoPath = Path.Combine(_imageDirectory, "previous.png"),
             Action = context =>
             {
                 _ = EnsureActiveDevice(
