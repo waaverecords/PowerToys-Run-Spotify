@@ -214,10 +214,11 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
     {
         List<Result> results = new List<Result>();
 
+
         var previousTrack = new Result
         {
             Title = "Previous track",
-            IcoPath = Path.Combine(_imageDirectory, "previous.png"),
+            IcoPath = Path.Combine(_imageDirectory, "toggle.png"),
             Action = context =>
             {
                 _ = EnsureActiveDevice(
@@ -274,6 +275,27 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
             Score = 0
         };
 
+        var togglePlayback = new Result{
+            Title = "Toggle playback",
+            IcoPath = Path.Combine(_imageDirectory, "toggle.png"),
+            Action = context =>
+            {
+                _ = EnsureActiveDevice(
+                    async (player, request) => await player.GetCurrentPlayback(new PlayerCurrentPlaybackRequest()).ContinueWith(async task =>
+                    {
+                        var playback = task.Result;
+                        if (playback.IsPlaying)
+                            await player.PausePlayback(new PlayerPausePlaybackRequest());
+                        else
+                            await player.ResumePlayback(new PlayerResumePlaybackRequest());
+                    }),
+                    new PlayerResumePlaybackRequest()
+                );
+                return true;
+            },
+            Score = 100
+        };
+        
         var turnOnShuffle = new Result
         {
             Title = "Turn on shuffle",
@@ -358,6 +380,7 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
         results.Add(setRepeatTrack);
         results.Add(setRepeatContext);
         results.Add(setRepeatOff);
+        results.Add(togglePlayback);
 
         return results;
     }
