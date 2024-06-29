@@ -277,7 +277,7 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
 
         var togglePlayback = new Result{
             Title = "Toggle playback",
-            IcoPath = Path.Combine(_imageDirectory, "toggle.png"),
+            IcoPath = Path.Combine(_imageDirectory, "play-pause.png"),
             Action = context =>
             {
                 _ = EnsureActiveDevice(
