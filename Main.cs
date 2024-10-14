@@ -123,7 +123,7 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
             results.AddRange(searchResponse.Tracks.Items.Select(track => new Result
             {
                 Title = track.Name,
-                SubTitle = $"Song • By {string.Join(", ", track.Artists.Select(x => x.Name))}",
+                SubTitle = $"Song{(track.Explicit ? " • Explicit" : "")} • By {string.Join(", ", track.Artists.Select(x => x.Name))}",
                 Icon = () => new BitmapImage(new Uri(track.Album.Images.OrderBy(x => x.Width * x.Height).First().Url)),
                 ContextData = new ContextData
                 {
