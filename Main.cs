@@ -183,27 +183,6 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
                 }
             }));
 
-        if (searchResponse.Playlists.Items != null)
-            results.AddRange(searchResponse.Playlists.Items.Select(playList => new Result
-            {
-                Title = playList.Name,
-                SubTitle = "Playlist",
-                Icon = () => new BitmapImage(new Uri(playList.Images.OrderBy(x => x.Width * x.Height).First().Url)),
-                ContextData = new ContextData
-                {
-                    ResultType = ResultType.Playlist,
-                    Uri = playList.Uri
-                },
-                Action = context =>
-                {
-                    _ = EnsureActiveDevice(
-                        async (player, request) => await player.ResumePlayback(request),
-                        new PlayerResumePlaybackRequest { ContextUri = playList.Uri}
-                    );
-                    return true;
-                }
-            }));
-
         foreach (var result in results)
             result.Score = GetScore(result.Title, query.Search);
 
