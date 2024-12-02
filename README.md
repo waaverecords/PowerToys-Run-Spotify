@@ -8,8 +8,8 @@ This is a plugin for [PowerToys](https://github.com/microsoft/PowerToys) Run tha
 
 ## Features
 
-- Search for songs, albums, artists and playlists
-- Play songs, albums, artists and playlists
+- Search for songs, albums and artists
+- Play songs, albums and artists
 - Add song to queue (Shift+Enter)
 - Pause and resume track
 - Go to previous or next track
@@ -50,7 +50,7 @@ Open PowerToys Run (default shortcut is ```Alt+Space```).
 ### Play a song
 
 1. Type ```sp``` followed by your search query.
-2. Select a song, artist or playlist and press ```Enter``` to play it.
+2. Select a song, album or artist and press ```Enter``` to play it.
 
 ### Control the playback
 
