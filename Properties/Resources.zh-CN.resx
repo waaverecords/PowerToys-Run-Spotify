@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+        <xsd:element name="root" msdata:IsDataSet="true">
+            <xsd:complexType>
+                <xsd:choice maxOccurs="unbounded">
+                    <xsd:element name="metadata">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                            </xsd:sequence>
+                            <xsd:attribute name="name" use="required" type="xsd:string" />
+                            <xsd:attribute name="type" type="xsd:string" />
+                            <xsd:attribute name="mimetype" type="xsd:string" />
+                            <xsd:attribute ref="xml:space" />
+                        </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="assembly">
+                        <xsd:complexType>
+                        <xsd:attribute name="alias" type="xsd:string" />
+                        <xsd:attribute name="name" type="xsd:string" />
+                        </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="data">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                            </xsd:sequence>
+                            <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+                            <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+                            <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+                            <xsd:attribute ref="xml:space" />
+                        </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="resheader">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                            </xsd:sequence>
+                            <xsd:attribute name="name" type="xsd:string" use="required" />
+                        </xsd:complexType>
+                    </xsd:element>
+                </xsd:choice>
+            </xsd:complexType>
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>2.0</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms</value>
+    </resheader>
+
+    <data name="PluginDescription" xml:space="preserve">
+        <value>搜索歌曲与控制 Spotify.</value>
+    </data>
+
+    <data name="PluginOptionClientIdDescription" xml:space="preserve">
+        <value>你的 Spotify Client ID.</value>
+    </data>
+
+    <data name="ResultMissingClientIdTitle" xml:space="preserve">
+        <value>Spotify - 缺失 Client ID</value>
+    </data>
+    <data name="ResultMissingClientIdSubTitle" xml:space="preserve">
+        <value>在插件设置中设置你的 Client ID</value>
+    </data>
+
+    <data name="ResultLoginTitle" xml:space="preserve">
+        <value>Spotify - 登录</value>
+    </data>
+    <data name="ResultLoginSubTitle" xml:space="preserve">
+        <value>登录以授权使用 Spotify API</value>
+    </data>
+
+    <data name="ResultSongSubTitle" xml:space="preserve">
+        <value>歌曲</value>
+    </data>
+    <data name="ResultSongExplicitSubTitle" xml:space="preserve">
+        <value>成人</value>
+    </data>
+    <data name="ResultSongBySubTitle" xml:space="preserve">
+        <value>作者</value>
+    </data>
+
+    <data name="ResultAlbumSubTitle" xml:space="preserve">
+        <value>专辑</value>
+    </data>
+
+    <data name="ResultArtistSubTitle" xml:space="preserve">
+        <value>艺术家</value>
+    </data>
+
+    <data name="ResultPreviousTrackTitle" xml:space="preserve">
+        <value>上一曲</value>
+    </data>
+
+    <data name="ResultNextTrackTitle" xml:space="preserve">
+        <value>下一曲</value>
+    </data>
+
+    <data name="ResultPausePlaybackTitle" xml:space="preserve">
+        <value>暂停播放</value>
+    </data>
+
+    <data name="ResultResumePlaybackTitle" xml:space="preserve">
+        <value>继续播放</value>
+    </data>
+
+    <data name="ResultTogglePlaybackTitle" xml:space="preserve">
+        <value>播放/暂停</value>
+    </data>
+
+    <data name="ResultTurnOnShuffleTitle" xml:space="preserve">
+        <value>启用随机播放</value>
+    </data>
+
+    <data name="ResultTurnOffShuffleTitle" xml:space="preserve">
+        <value>关闭随机播放</value>
+    </data>
+
+    <data name="ResultSetRepeatTrackTitle" xml:space="preserve">
+        <value>重复播放单曲</value>
+    </data>
+
+    <data name="ResultSetRepeatContextTitle" xml:space="preserve">
+        <value>重复播放列表</value>
+    </data>
+
+    <data name="ResultSetRepeatOffTitle" xml:space="preserve">
+        <value>关闭重复播放</value>
+    </data>
+
+    <data name="ContextMenuResultAddToQueueTitle" xml:space="preserve">
+        <value>添加到队列 (Shift+Enter)</value>
+    </data>
+
+</root>
