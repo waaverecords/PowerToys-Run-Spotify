@@ -10,6 +10,7 @@ using System.Windows.Input;
 using System.Net;
 using System.Diagnostics;
 using ManagedCommon;
+using PowerToys_Run_Spotify.Properties;
 
 namespace PowerToys_Run_Spotify;
 
@@ -17,7 +18,7 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
 {
     public static string PluginID => "BX1Z634F30489859A3671B4FQ7Y07193";
     public string Name => "Spotify";
-    public string Description => "Searches and controls Spotify.";
+    public string Description => Resources.PluginDescription;
 
     internal string ClientId { get; private set; }
     private string  _appDataPath;
@@ -31,7 +32,7 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
         {
             Key = nameof(ClientId),
             DisplayLabel = "Client ID",
-            DisplayDescription = "Your Spotify's app client id.",
+            DisplayDescription = Resources.PluginOptionClientIdDescription,
             PluginOptionType = PluginAdditionalOption.AdditionalOptionType.Textbox
         }
     };
@@ -85,16 +86,16 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
         if (string.IsNullOrEmpty(ClientId))
             return new List<Result>() {new Result
             {
-                Title = "Spotify - Missing client ID",
-                SubTitle = "Set your client ID in the plugin's settings",
+                Title = Resources.ResultMissingClientIdTitle,
+                SubTitle = Resources.ResultMissingClientIdSubTitle,
                 Action = context => true
             }};
 
         if (!File.Exists(_credentialsPath))
             return new List<Result>() {new Result
                 {
-                    Title = "Spotify - Login",
-                    SubTitle = "Login to authorize the use of the Spotify API",
+                    Title = Resources.ResultLoginTitle,
+                    SubTitle = Resources.ResultLoginSubTitle,
                     Action = context =>
                     {
                         _ = LoginToSpotify(ClientId);
@@ -123,7 +124,7 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
             results.AddRange(searchResponse.Tracks.Items.Select(track => new Result
             {
                 Title = track.Name,
-                SubTitle = $"Song{(track.Explicit ? " • Explicit" : "")} • By {string.Join(", ", track.Artists.Select(x => x.Name))}",
+                SubTitle = $"{Resources.ResultSongSubTitle}{(track.Explicit ? $" • {Resources.ResultSongExplicitSubTitle}" : "")} • {Resources.ResultSongBySubTitle} {string.Join(", ", track.Artists.Select(x => x.Name))}",
                 Icon = () => new BitmapImage(new Uri(track.Album.Images.OrderBy(x => x.Width * x.Height).First().Url)),
                 ContextData = new ContextData
                 {
@@ -144,7 +145,7 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
             results.AddRange(searchResponse.Albums.Items.Select(album => new Result
             {
                 Title = album.Name,
-                SubTitle = "Album",
+                SubTitle = Resources.ResultAlbumSubTitle,
                 Icon = () => new BitmapImage(new Uri(album.Images.OrderBy(x => x.Width * x.Height).First().Url)),
                 ContextData = new ContextData
                 {
@@ -166,7 +167,7 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
             results.AddRange(searchResponse.Artists.Items.Select(artist => new Result
             {
                 Title = artist.Name,
-                SubTitle = "Artist",
+                SubTitle = Resources.ResultArtistSubTitle,
                 Icon = () => new BitmapImage(new Uri(artist.Images.OrderBy(x => x.Width * x.Height).First().Url)),
                 ContextData = new ContextData
                 {
@@ -196,7 +197,7 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
 
         var previousTrack = new Result
         {
-            Title = "Previous track",
+            Title = Resources.ResultPreviousTrackTitle,
             IcoPath = Path.Combine(_imageDirectory, "previous.png"),
             Action = context =>
             {
@@ -211,7 +212,7 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
 
         var nextTrack = new Result
         {
-            Title = "Next track",
+            Title = Resources.ResultNextTrackTitle,
             IcoPath = Path.Combine(_imageDirectory, "next.png"),
             Action = context =>
             {
@@ -226,7 +227,7 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
 
         var pausePlayback = new Result
         {
-            Title = "Pause playback",
+            Title = Resources.ResultPausePlaybackTitle,
             IcoPath = Path.Combine(_imageDirectory, "pause.png"),
             Action = context =>
             {
@@ -241,7 +242,7 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
 
         var resumePlayback = new Result
         {
-            Title = "Resume playback",
+            Title = Resources.ResultResumePlaybackTitle,
             IcoPath = Path.Combine(_imageDirectory, "play.png"),
             Action = context =>
             {
@@ -255,7 +256,7 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
         };
 
         var togglePlayback = new Result{
-            Title = "Toggle playback",
+            Title = Resources.ResultTogglePlaybackTitle,
             IcoPath = Path.Combine(_imageDirectory, "play-pause.png"),
             Action = context =>
             {
@@ -277,7 +278,7 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
         
         var turnOnShuffle = new Result
         {
-            Title = "Turn on shuffle",
+            Title = Resources.ResultTurnOnShuffleTitle,
             IcoPath = Path.Combine(_imageDirectory, "shuffle.png"),
             Action = context =>
             {
@@ -292,7 +293,7 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
 
         var turnOffShuffle = new Result
         {
-            Title = "Turn off shuffle",
+            Title = Resources.ResultTurnOffShuffleTitle,
             IcoPath = Path.Combine(_imageDirectory, "shuffle.png"),
             Action = context =>
             {
@@ -307,7 +308,7 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
 
         var setRepeatTrack = new Result
         {
-            Title = "Set repeat to track",
+            Title = Resources.ResultSetRepeatTrackTitle,
             IcoPath = Path.Combine(_imageDirectory, "repeat.png"),
             Action = context =>
             {
@@ -322,7 +323,7 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
 
         var setRepeatContext = new Result
         {
-            Title = "Set repeat to context",
+            Title = Resources.ResultSetRepeatContextTitle,
             IcoPath = Path.Combine(_imageDirectory, "repeat.png"),
             Action = context =>
             {
@@ -337,7 +338,7 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
 
         var setRepeatOff = new Result
         {
-            Title = "Set repeat to off",
+            Title = Resources.ResultSetRepeatOffTitle,
             IcoPath = Path.Combine(_imageDirectory, "repeat.png"),
             Action = context =>
             {
@@ -413,7 +414,7 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
             case ResultType.Song:
                 results.Add(new ContextMenuResult
                 {
-                    Title = $"Add to queue (Shift+Enter)",
+                    Title = Resources.ContextMenuResultAddToQueueTitle,
                     Glyph = "\xF8AA",
                     FontFamily = "Segoe MDL2 Assets",
                     AcceleratorKey = Key.Enter,
