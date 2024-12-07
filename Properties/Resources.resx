@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+        <xsd:element name="root" msdata:IsDataSet="true">
+            <xsd:complexType>
+                <xsd:choice maxOccurs="unbounded">
+                    <xsd:element name="metadata">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                            </xsd:sequence>
+                            <xsd:attribute name="name" use="required" type="xsd:string" />
+                            <xsd:attribute name="type" type="xsd:string" />
+                            <xsd:attribute name="mimetype" type="xsd:string" />
+                            <xsd:attribute ref="xml:space" />
+                        </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="assembly">
+                        <xsd:complexType>
+                        <xsd:attribute name="alias" type="xsd:string" />
+                        <xsd:attribute name="name" type="xsd:string" />
+                        </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="data">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                            </xsd:sequence>
+                            <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+                            <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+                            <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+                            <xsd:attribute ref="xml:space" />
+                        </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="resheader">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                            </xsd:sequence>
+                            <xsd:attribute name="name" type="xsd:string" use="required" />
+                        </xsd:complexType>
+                    </xsd:element>
+                </xsd:choice>
+            </xsd:complexType>
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>2.0</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms</value>
+    </resheader>
+
+    <data name="PluginDescription" xml:space="preserve">
+        <value>Searches and controls Spotify.</value>
+    </data>
+
+    <data name="PluginOptionClientIdDescription" xml:space="preserve">
+        <value>Your Spotify's app client id.</value>
+    </data>
+
+    <data name="ResultMissingClientIdTitle" xml:space="preserve">
+        <value>Spotify - Missing client ID</value>
+    </data>
+    <data name="ResultMissingClientIdSubTitle" xml:space="preserve">
+        <value>Set your client ID in the plugin's settings</value>
+    </data>
+
+    <data name="ResultLoginTitle" xml:space="preserve">
+        <value>Spotify - Login</value>
+    </data>
+    <data name="ResultLoginSubTitle" xml:space="preserve">
+        <value>Login to authorize the use of the Spotify API</value>
+    </data>
+
+    <data name="ResultSongSubTitle" xml:space="preserve">
+        <value>Song</value>
+    </data>
+    <data name="ResultSongExplicitSubTitle" xml:space="preserve">
+        <value>Explicit</value>
+    </data>
+    <data name="ResultSongBySubTitle" xml:space="preserve">
+        <value>By</value>
+    </data>
+
+    <data name="ResultAlbumSubTitle" xml:space="preserve">
+        <value>Album</value>
+    </data>
+
+    <data name="ResultArtistSubTitle" xml:space="preserve">
+        <value>Artist</value>
+    </data>
+
+    <data name="ResultPreviousTrackTitle" xml:space="preserve">
+        <value>Previous track</value>
+    </data>
+
+    <data name="ResultNextTrackTitle" xml:space="preserve">
+        <value>Next track</value>
+    </data>
+
+    <data name="ResultPausePlaybackTitle" xml:space="preserve">
+        <value>Pause playback</value>
+    </data>
+
+    <data name="ResultResumePlaybackTitle" xml:space="preserve">
+        <value>Resume playback</value>
+    </data>
+
+    <data name="ResultTogglePlaybackTitle" xml:space="preserve">
+        <value>Toggle playback</value>
+    </data>
+
+    <data name="ResultTurnOnShuffleTitle" xml:space="preserve">
+        <value>Turn on shuffle</value>
+    </data>
+
+    <data name="ResultTurnOffShuffleTitle" xml:space="preserve">
+        <value>Turn off shuffle</value>
+    </data>
+
+    <data name="ResultSetRepeatTrackTitle" xml:space="preserve">
+        <value>Set repeat to track</value>
+    </data>
+
+    <data name="ResultSetRepeatContextTitle" xml:space="preserve">
+        <value>Set repeat to context</value>
+    </data>
+
+    <data name="ResultSetRepeatOffTitle" xml:space="preserve">
+        <value>Set repeat to off</value>
+    </data>
+
+    <data name="ContextMenuResultAddToQueueTitle" xml:space="preserve">
+        <value>Add to queue (Shift+Enter)</value>
+    </data>
+
+</root>
