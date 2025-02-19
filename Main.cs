@@ -1,4 +1,4 @@
-﻿ using Wox.Plugin;
+﻿using Wox.Plugin;
 using System.Windows.Controls;
 using Microsoft.PowerToys.Settings.UI.Library;
 using System.Windows.Media.Imaging;
