@@ -279,6 +279,7 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
             Score = 0
         };
 
+
         var togglePlayback = new Result{
             Title = Resources.ResultTogglePlaybackTitle,
             IcoPath = Path.Combine(_imageDirectory, "play-pause.png"),
@@ -298,6 +299,19 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
                 return true;
             },
             Score = 100
+        };
+
+        PlayerCurrentlyPlayingRequest req = new PlayerCurrentlyPlayingRequest{
+            Market = "NL"
+        };
+        var currentlyPlaying = _spotifyClient.Player.GetCurrentlyPlaying(req).GetAwaiter().GetResult();
+        var curTrack = currentlyPlaying.Item as FullTrack;
+
+        var nowPlaying = new Result{
+            Title = curTrack.Name,
+            SubTitle = curTrack.Artists[0].Name,
+            Icon = () => new BitmapImage(new Uri(curTrack.Album.Images.OrderBy(x => x.Width * x.Height).First().Url)),
+            Score = 80
         };
         
         var turnOnShuffle = new Result
@@ -385,6 +399,7 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
         results.Add(setRepeatContext);
         results.Add(setRepeatOff);
         results.Add(togglePlayback);
+        results.Add(nowPlaying);
 
         return results;
     }
