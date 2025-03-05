@@ -1,4 +1,4 @@
-﻿using Wox.Plugin;
+using Wox.Plugin;
 using System.Windows.Controls;
 using Microsoft.PowerToys.Settings.UI.Library;
 using System.Windows.Media.Imaging;
@@ -24,6 +24,7 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
     private string  _appDataPath;
     private string  _credentialsPath;
     private SpotifyClient _spotifyClient;
+    private FullTrack lastPlayedTrack;
     private string _imageDirectory { get; set; }
 
     IEnumerable<PluginAdditionalOption> ISettingProvider.AdditionalOptions => new List<PluginAdditionalOption>()
@@ -44,6 +45,16 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
 
         context.API.ThemeChanged += OnThemeChanged;
         OnThemeChanged(Theme.Light, context.API.GetCurrentTheme());
+        UpdateCurrentTrack();
+    }
+
+    private async Task UpdateCurrentTrack()
+    {
+        PlayerCurrentlyPlayingRequest req = new PlayerCurrentlyPlayingRequest{
+            Market = "NL"
+        };
+        var currentlyPlaying = await _spotifyClient.Player.GetCurrentlyPlaying(req);
+        lastPlayedTrack = currentlyPlaying.Item as FullTrack;
     }
 
     public Control CreateSettingPanel()
@@ -279,6 +290,7 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
             Score = 0
         };
 
+
         var togglePlayback = new Result{
             Title = Resources.ResultTogglePlaybackTitle,
             IcoPath = Path.Combine(_imageDirectory, "play-pause.png"),
@@ -298,6 +310,35 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
                 return true;
             },
             Score = 100
+        };
+
+        UpdateCurrentTrack();
+
+        var nowPlaying = new Result{
+            Title = lastPlayedTrack.Name,
+            SubTitle = lastPlayedTrack.Artists[0].Name,
+            Icon = () => new BitmapImage(new Uri(lastPlayedTrack.Album.Images.OrderBy(x => x.Width * x.Height).First().Url)),
+            Score = 80,
+            ContextData = new ContextData
+            {
+                    ResultType = ResultType.AddToLikes,
+                    Uri = lastPlayedTrack.Uri
+            },
+            Action = context =>
+            {
+                _ = EnsureActiveDevice(
+                    async (player, request) => await player.GetCurrentPlayback(new PlayerCurrentPlaybackRequest()).ContinueWith(async task =>
+                    {
+                        var playback = task.Result;
+                        if (playback.IsPlaying)
+                            await player.PausePlayback(new PlayerPausePlaybackRequest());
+                        else
+                            await player.ResumePlayback(new PlayerResumePlaybackRequest());
+                    }),
+                    new PlayerResumePlaybackRequest()
+                );
+                return true;
+            },
         };
         
         var turnOnShuffle = new Result
@@ -385,6 +426,7 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
         results.Add(setRepeatContext);
         results.Add(setRepeatOff);
         results.Add(togglePlayback);
+        results.Add(nowPlaying);
 
         return results;
     }
