@@ -2,6 +2,8 @@
 
 This is a plugin for [PowerToys](https://github.com/microsoft/PowerToys) Run that allows you to search Spotify and control its player.
 
+For the Command Palette version, see [CmdPal.Ext.Spotify](https://github.com/waaverecords/CmdPal.Ext.Spotify).
+
 <p align="center">
     <img src="./demo.gif" width="760" />
 </p>
