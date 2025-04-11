@@ -470,7 +470,7 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
 
         var tcs = new TaskCompletionSource();
 
-        var callbackUri = new Uri("http://localhost:5543/callback");
+        var callbackUri = new Uri("http://127.0.0.1:5543/callback");
         var authServer = new EmbedIOAuthServer(callbackUri, 5543);
 
         authServer.AuthorizationCodeReceived += async (sender, response) =>
