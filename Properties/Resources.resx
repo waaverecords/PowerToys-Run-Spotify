@@ -143,4 +143,12 @@
         <value>Add to queue (Shift+Enter)</value>
     </data>
 
+    <data name="ResultVolumeUpTitle" xml:space="preserve">
+        <value>Volume up</value>
+    </data>
+
+    <data name="ResultVolumeDownTitle" xml:space="preserve">
+        <value>Volume down</value>
+    </data>
+
 </root>

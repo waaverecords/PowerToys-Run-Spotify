@@ -375,6 +375,54 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
             Score = 0
         };
 
+        var volumeUp = new Result
+        {
+            Title = Resources.ResultVolumeUpTitle,
+            IcoPath = Path.Combine(_imageDirectory, "volume-up.png"), // Icon by Mahumam – flaticon.com
+            Action = context =>
+            {
+                _ = EnsureActiveDevice(
+                    async (player, request) => 
+                    {
+                        var currentPlayback = await player.GetCurrentPlayback();
+                        if (currentPlayback != null && currentPlayback.Device != null)
+                        {
+                            var newVolume = Math.Min(100, (currentPlayback.Device.VolumePercent ?? 50) + 5);
+                            return await player.SetVolume(new PlayerVolumeRequest(newVolume));
+                        }
+                        return await player.SetVolume(request);
+                    },
+                    new PlayerVolumeRequest(55) // fallback volume
+                );
+                return true;
+            },
+            Score = 0
+        };
+
+        var volumeDown = new Result
+        {
+            Title = Resources.ResultVolumeDownTitle,
+            IcoPath = Path.Combine(_imageDirectory, "volume-down.png"), // Icon by Mahumam – flaticon.com
+            Action = context =>
+            {
+                _ = EnsureActiveDevice(
+                    async (player, request) => 
+                    {
+                        var currentPlayback = await player.GetCurrentPlayback();
+                        if (currentPlayback != null && currentPlayback.Device != null)
+                        {
+                            var newVolume = Math.Max(0, (currentPlayback.Device.VolumePercent ?? 50) - 5);
+                            return await player.SetVolume(new PlayerVolumeRequest(newVolume));
+                        }
+                        return await player.SetVolume(request);
+                    },
+                    new PlayerVolumeRequest(45) // fallback volume
+                );
+                return true;
+            },
+            Score = 0
+        };
+
         results.Add(previousTrack);
         results.Add(nextTrack);
         results.Add(pausePlayback);
@@ -385,6 +433,8 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
         results.Add(setRepeatContext);
         results.Add(setRepeatOff);
         results.Add(togglePlayback);
+        results.Add(volumeUp);
+        results.Add(volumeDown);
 
         return results;
     }
