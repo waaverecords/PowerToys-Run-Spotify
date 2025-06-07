@@ -257,5 +257,23 @@ namespace PowerToys_Run_Spotify.Properties {
                 return ResourceManager.GetString("ResultTurnOnShuffleTitle", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Volume up.
+        /// </summary>
+        internal static string ResultVolumeUpTitle {
+            get {
+                return ResourceManager.GetString("ResultVolumeUpTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Volume down.
+        /// </summary>
+        internal static string ResultVolumeDownTitle {
+            get {
+                return ResourceManager.GetString("ResultVolumeDownTitle", resourceCulture);
+            }
+        }
     }
 }
