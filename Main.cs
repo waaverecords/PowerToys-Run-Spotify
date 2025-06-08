@@ -385,14 +385,10 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
                     async (player, request) => 
                     {
                         var currentPlayback = await player.GetCurrentPlayback();
-                        if (currentPlayback != null && currentPlayback.Device != null)
-                        {
-                            var newVolume = Math.Min(100, (currentPlayback.Device.VolumePercent ?? 50) + 5);
-                            return await player.SetVolume(new PlayerVolumeRequest(newVolume));
-                        }
+                        request = new PlayerVolumeRequest(Math.Min(100, (currentPlayback?.Device?.VolumePercent ?? request.VolumePercent) + 5));
                         return await player.SetVolume(request);
                     },
-                    new PlayerVolumeRequest(55) // fallback volume
+                    new PlayerVolumeRequest(50)
                 );
                 return true;
             },
@@ -409,14 +405,10 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
                     async (player, request) => 
                     {
                         var currentPlayback = await player.GetCurrentPlayback();
-                        if (currentPlayback != null && currentPlayback.Device != null)
-                        {
-                            var newVolume = Math.Max(0, (currentPlayback.Device.VolumePercent ?? 50) - 5);
-                            return await player.SetVolume(new PlayerVolumeRequest(newVolume));
-                        }
+                        request = new PlayerVolumeRequest(Math.Max(0, (currentPlayback?.Device?.VolumePercent ?? request.VolumePercent) - 5));
                         return await player.SetVolume(request);
                     },
-                    new PlayerVolumeRequest(45) // fallback volume
+                    new PlayerVolumeRequest(50)
                 );
                 return true;
             },
