@@ -143,4 +143,12 @@
         <value>添加到队列 (Shift+Enter)</value>
     </data>
 
+    <data name="ResultVolumeUpTitle" xml:space="preserve">
+        <value>音量增加</value>
+    </data>
+
+    <data name="ResultVolumeDownTitle" xml:space="preserve">
+        <value>音量减少</value>
+    </data>
+
 </root>
