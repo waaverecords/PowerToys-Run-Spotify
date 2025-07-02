@@ -17,6 +17,7 @@ For the Command Palette version, see [CmdPal.Ext.Spotify](https://github.com/waa
 - Go to previous or next track
 - Turn shuffle on and off
 - Set repeat to track, context or off
+- Turn volume up and down
 
 ## Installation
 
