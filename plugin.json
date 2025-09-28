@@ -4,7 +4,7 @@
     "ActionKeyword": "sp",
     "Name": "Spotify",
     "Author": "waaverecords",
-    "Version": "0.94.0",
+    "Version": "0.94.2",
     "Language": "csharp",
     "Website": "https://github.com/waaverecords/PowerToys-Run-Spotify",
     "ExecuteFileName": "PowerToys-Run-Spotify.dll",
