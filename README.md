@@ -25,7 +25,7 @@ For the Command Palette version, see [CmdPal.Ext.Spotify](https://github.com/waa
 > Spotify Premium is necessary to control the player.
 
 1. Check your current PowerToys version (open PowerToys and look at the version number at the bottom of the settings window).
-2. download the [release](https://github.com/waaverecords/PowerToys-Run-Spotify/releases/latest) that matches your PowerToys version.
+2. Download the [release](https://github.com/waaverecords/PowerToys-Run-Spotify/releases/latest) that matches your PowerToys version.
 3. Extract the content of the zip file to the `RunPlugins` folder of your PowerToys' installation. Usually `C:\Program Files\PowerToys\RunPlugins`, or `%LOCALAPPDATA%\Microsoft\PowerToys\PowerToys Run\Plugins`.
 4. Restart PowerToys.
 5. Head to your Spotify [developer dashboard](https://developer.spotify.com/).
@@ -42,9 +42,9 @@ For the Command Palette version, see [CmdPal.Ext.Spotify](https://github.com/waa
 
 1. Ensure you have the [latest version](https://github.com/microsoft/PowerToys/releases/latest) of PowerToys installed.
 2. Close PowerToys.
-2. Download the [newest release](https://github.com/waaverecords/PowerToys-Run-Spotify/releases/latest) zip file.
-3. Extract the content of the zip file to the `RunPlugins` folder of your PowerToys' installation. Usually `C:\Program Files\PowerToys\RunPlugins`, or `%LOCALAPPDATA%\Microsoft\PowerToys\PowerToys Run\Plugins`.
-4. Restart PowerToys.
+3. Download the [release](https://github.com/waaverecords/PowerToys-Run-Spotify/releases/latest) zip file that matches your PowerToys version.
+4. Extract the content of the zip file to the `RunPlugins` folder of your PowerToys' installation. Usually `C:\Program Files\PowerToys\RunPlugins`, or `%LOCALAPPDATA%\Microsoft\PowerToys\PowerToys Run\Plugins`.
+5. Restart PowerToys.
 
 ## Usage
 
