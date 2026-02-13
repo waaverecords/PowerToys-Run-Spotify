@@ -18,15 +18,19 @@
     <ItemGroup>
         <Reference Include="PowerToys.Common.UI">
             <HintPath>libs\PowerToys.Common.UI.dll</HintPath>
+            <Private>false</Private>
         </Reference>
         <Reference Include="PowerToys.ManagedCommon">
             <HintPath>libs\PowerToys.ManagedCommon.dll</HintPath>
+            <Private>false</Private>
         </Reference>
         <Reference Include="PowerToys.Settings.UI.Lib">
-            <HintPath>libs\PowerToys.Settings.UI.Lib</HintPath>
+            <HintPath>libs\PowerToys.Settings.UI.Lib.dll</HintPath>
+            <Private>false</Private>
         </Reference>
         <Reference Include="Wox.Plugin">
             <HintPath>libs\Wox.Plugin.dll</HintPath>
+            <Private>false</Private>
         </Reference>
     </ItemGroup>
 
