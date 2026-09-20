@@ -133,9 +133,12 @@ public class Main : IPlugin, IContextMenu, ISettingProvider
                 },
                 Action = context =>
                 {
+                    // Nota: algunos clientes de escritorio ignoran "uris" suelto.
+                    // Reproducir la canción dentro del contexto de su álbum + offset
+                    // es equivalente y funciona en esos clientes.
                     _ = EnsureActiveDevice(
                         async (player, request) => await player.ResumePlayback(request),
-                        new PlayerResumePlaybackRequest { Uris = new List<string> { track.Uri } }
+                        new PlayerResumePlaybackRequest { ContextUri = track.Album.Uri, OffsetParam = new PlayerResumePlaybackRequest.Offset { Uri = track.Uri } }
                     );
                     return true;
                 }
